@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+
+def factorize(fname):
+    with open(fname) as f:
+        lst = f.readlines()
+    lst = [int(num) for num in lst]
+    flag = 0
+    for num in lst:
+        normal_factors = list(range(2, 11)) + list(range(num//1000,
+                                                   num//1000 + 1000))
+        for fact in normal_factors:
+            if not num % fact:
+                break
+        print("{:d}={:d}*{:d}".format(num, int(num / fact), fact))
+
+
+def get_cmd_arg():
+    from sys import argv
+    argv = argv[1:]
+    if len(argv) == 0:
+        print("please add file name as argument.")
+    else:
+        for fname in argv:
+            factorize(fname)
+
+
+get_cmd_arg()
