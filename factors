@@ -1,27 +1,32 @@
 #!/usr/bin/python3
 
-def factorize(fname):
-    with open(fname) as f:
-        lst = f.readlines()
-    lst = [int(num) for num in lst]
-    flag = 0
-    for num in lst:
-        normal_factors = list(range(2, 11)) + list(range(num//1000,
-                                                   num//1000 + 1000))
-        for fact in normal_factors:
-            if not num % fact:
-                break
-        print("{:d}={:d}*{:d}".format(num, int(num / fact), fact))
-
-
-def get_cmd_arg():
+def factorize_using_cmd():
+    from time import time
     from sys import argv
-    argv = argv[1:]
-    if len(argv) == 0:
-        print("please add file name as argument.")
+
+    start = time()
+    if len(argv) != 2:
+        print("\aPlease add a file name as argument.\n\n")
     else:
-        for fname in argv:
-            factorize(fname)
+        try:
+            with open(argv[1]) as f:
+                lst = f.readlines()
+        except:
+            print("\aFile not found.\n\n")
+            exit()
+        lst = [int(num) for num in lst]
+        for num in lst:
+            normal_factors = list(range(2, 101)) + list(reversed(
+                                                    range(int(num ** .5)-999,
+                                                          int(num ** .5)+1)))
+            for fact in normal_factors:
+                if time() - start >= 5:
+                    print("\aTime limit exceded.\n\n")
+                    exit()
+                if not num % fact:
+                    break
+            print("{:d}={:d}*{:d}".format(num, int(num / fact), fact))
 
 
-get_cmd_arg()
+if __name__ == "__main__":
+    factorize_using_cmd()
