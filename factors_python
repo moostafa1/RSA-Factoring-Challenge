@@ -25,7 +25,8 @@ def factorize_using_cmd():
                     exit()
                 if not num % fact:
                     break
-            print("{:d}={:d}*{:d}".format(num, int(num / fact), fact))
+            #print("{:d}={:d}*{:d}".format(num, int(num / fact), fact))
+            print(f"{num}={int(num/fact)}*{fact}")
 
 
 if __name__ == "__main__":

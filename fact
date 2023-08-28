@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+
+import sys
+import subprocess
+
+def factorize_using_cmd():
+    if len(sys.argv) != 2:
+        print("\aPlease add a file name as an argument.\n\n")
+        return
+
+    filename = sys.argv[1]
+    try:
+        with open(filename) as f:
+            numbers = f.readlines()
+    except FileNotFoundError:
+        print("\aFile not found.\n\n")
+        return
+
+    for number in numbers:
+        try:
+            num = int(number.strip())
+            process = subprocess.run(['factor', str(num)], capture_output=True, text=True)
+            output = process.stdout.strip().split()
+            factors = output[1:]
+            factorization = f"{num}={factors[0]}*{factors[1]}"
+            print(factorization)
+        except ValueError:
+            print(f"\aInvalid number: {number.strip()}")
+
+if __name__ == "__main__":
+    factorize_using_cmd()
