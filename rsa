@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+
+def factorize_number(n):
+    factors = []
+    divisor = 2
+
+    while divisor <= n:
+        if n % divisor == 0:
+            factors.append(divisor)
+            n = n / divisor
+        else:
+            divisor += 1
+
+    return reversed(factors)
+
+
+def factorize_numbers_in_file():
+    from sys import argv
+
+    if len(argv) != 2:
+        print("\aPlease enter the a file to read data from.")
+        exit();
+    with open(argv[1], 'r') as file:
+        lines = file.readlines()
+
+        for line in lines:
+            number = int(line.strip())
+            factors = factorize_number(number)
+            factorization = '*'.join(str(factor) for factor in factors)
+            print(f"{number}={factorization}")
+
+
+if __name__ == "__main__":
+    # Usage: Replace 'input.txt' with the path to your input file.
+    factorize_numbers_in_file()

@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+
+def factorize_using_cmd():
+    from time import time
+    from sys import argv
+    import math
+
+    start = time()
+
+    if len(argv) != 2:
+        print("\aPlease add a file name as an argument.\n\n")
+    else:
+        try:
+            with open(argv[1]) as f:
+                lst = f.readlines()
+        except:
+            print("\aFile not found.\n\n")
+            exit()
+
+        lst = [int(num) for num in lst]
+
+        for num in lst:
+            factors = []
+            limit = math.isqrt(num) + 1
+
+            for factor in range(2, limit):
+                if time() - start >= 5:
+                    print("\aTime limit exceeded.\n\n")
+                    exit()
+
+                while num % factor == 0:
+                    factors.append(factor)
+                    num //= factor
+
+            if num > 1:
+                factors.append(num)
+
+            factorization = '*'.join(str(factor) for factor in factors)
+            print("{:d}={:s}".format(num, factorization))
+
+
+if __name__ == "__main__":
+    factorize_using_cmd()
