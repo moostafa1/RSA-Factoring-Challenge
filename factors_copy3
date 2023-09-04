@@ -1,0 +1,51 @@
+#!/usr/bin/python3
+from decimal import Decimal
+
+def range_factors(num):
+    dic = {2000000:10000000000, 20000:1000000000, 2000:100000000,
+           200:10000000}
+    for k in dic:
+        flag = 0
+        if dic[k] <= num:
+            flag = 1
+            lst = range(num//k, num//(k-1))
+            break
+    if flag == 0:
+        lst = list(range(2, num))
+    # print(lst)
+    return lst
+
+
+def factorize_using_cmd():
+    from time import time
+    from sys import argv
+
+    start = time()
+    if len(argv) != 2:
+        print("\aPlease add a file name as argument.\n\n")
+    else:
+        try:
+            with open(argv[1]) as f:
+                lst = f.readlines()
+        except FileNotFoundError:
+            print("\aFile not found.\n\n")
+            exit()
+        lst = [Decimal(num) for num in lst]
+        for num in lst:
+            normal_factors = range_factors(int(num))
+
+            for fact in normal_factors:
+                if time() - start >= 5:
+                    print("\aTime limit exceded.\n\n")
+                    exit()
+                if not int(num) % fact:
+                    print("{:s}={:s}*{:s}".format(str(num),
+                                                  str(num / fact),
+                                                  str(fact)))
+                    break
+            # print(f"{num}={int(num/fact)}*{fact}")
+
+
+if __name__ == "__main__":
+    factorize_using_cmd()
+    # range_factors(14692)
